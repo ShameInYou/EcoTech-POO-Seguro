@@ -4,9 +4,9 @@ Proyecto grupal de Programación Orientada a Objetos Segura. Acá vamos a ir arm
 
 ## Equipo
 
-- [ShameInYou](https://github.com/ShameInYou)
-- [johnny420jj](https://github.com/johnny420jj)
-- [rojasigna1-rgb](https://github.com/rojasigna1-rgb)
+- [ShameInYou](https://github.com/ShameInYou) (Gabriel Jara)
+- [johnny420jj](https://github.com/johnny420jj) (Juan Márquez)
+- [rojasigna1-rgb](https://github.com/rojasigna1-rgb) (Ignacio Rojas)
 
 ## Modelo que vamos a usar
 
