@@ -98,14 +98,6 @@ git push -u origin feature/usuario-rol
 
 La idea es que cada uno trabaje en su rama y revisemos los cambios entre nosotros antes de juntarlos. Esto es un acuerdo del equipo; todavía no hay una regla técnica que obligue a hacerlo.
 
-## Reparto del trabajo
-
-Todavía tenemos que asignar responsables. Podemos dividir las tareas en usuarios y roles; departamentos, proyectos y tiempos; y servicios e informes. La base de datos, la integración y las pruebas las coordinamos entre los tres.
-
-En cada iteración elegimos un líder y vamos rotando. Si un bloque queda más pesado, lo repartimos de nuevo. Antes de programar por separado, acordamos cómo se van a conectar nuestras clases.
-
-Una tarea queda terminada cuando cumple lo acordado y el modelo del Informe, la probamos, otro compañero la revisó y sus cambios ya están en `main`.
-
 ## Pruebas
 
 Aún no hay casos de prueba. A medida que implementemos, los agregamos en `tests/`. Si usamos `unittest`, se ejecutan así:
@@ -115,12 +107,6 @@ Aún no hay casos de prueba. A medida que implementemos, los agregamos en `tests
 ```
 
 Si aparecen cero pruebas, significa que todavía no hay nada comprobado por ese comando.
-
-## Revisión del profesor
-
-Queremos que el profesor pueda revisar tanto el código y los pull requests en GitHub como el avance de las tareas en Trello. **El acceso se gestiona por separado en cada plataforma**; compartir un enlace privado no basta para entrar.
-
-Pendiente: confirmar su cuenta de GitHub y su correo o usuario de Trello, enviar las invitaciones y comprobar que pueda abrir ambos. También falta agregar el enlace del tablero aquí. Mantendremos el repositorio privado.
 
 ## Un par de acuerdos importantes
 
