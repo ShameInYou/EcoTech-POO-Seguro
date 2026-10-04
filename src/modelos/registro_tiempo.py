@@ -10,18 +10,18 @@ from typing import Any
 class RegistroTiempo:
     def __init__(
         self,
-        idRegistro: str,
+        id_registro: str,
         fecha: date,
-        horasTrabajadas: float,
-        descripcionTareas: str,
+        horas_trabajadas: float,
+        descripcion_tareas: str,
         empleado: Any,
         proyecto: Any,
         aprobado: bool = False
     ):
-        self.__idRegistro = idRegistro
+        self.__id_registro = id_registro
         self.__fecha = fecha
-        self.__horasTrabajadas = horasTrabajadas
-        self.__descripcionTareas = descripcionTareas
+        self.__horas_trabajadas = horas_trabajadas
+        self.__descripcion_tareas = descripcion_tareas
         self.__aprobado = aprobado
 
         # Relaciones necesarias para conservar la trazabilidad:
@@ -29,18 +29,18 @@ class RegistroTiempo:
         self.__empleado = empleado
         self.__proyecto = proyecto
 
-    def crearRegistro(self) -> bool:
+    def crear_registro(self) -> bool:
         """Valida los datos mínimos necesarios para crear un registro."""
-        if not self.__idRegistro:
+        if not self.__id_registro:
             return False
 
         if not isinstance(self.__fecha, date):
             return False
 
-        if self.__horasTrabajadas <= 0:
+        if self.__horas_trabajadas <= 0:
             return False
 
-        if not self.__descripcionTareas:
+        if not self.__descripcion_tareas:
             return False
 
         if self.__empleado is None or self.__proyecto is None:
@@ -48,11 +48,11 @@ class RegistroTiempo:
 
         return True
 
-    def modificarRegistro(
+    def modificar_registro(
         self,
         fecha: date = None,
-        horasTrabajadas: float = None,
-        descripcionTareas: str = None
+        horas_trabajadas: float = None,
+        descripcion_tareas: str = None
     ) -> bool:
         """Permite modificar los datos del registro de tiempo."""
         if fecha is not None:
@@ -60,14 +60,14 @@ class RegistroTiempo:
                 return False
             self.__fecha = fecha
 
-        if horasTrabajadas is not None:
-            if horasTrabajadas <= 0:
+        if horas_trabajadas is not None:
+            if horas_trabajadas <= 0:
                 return False
-            self.__horasTrabajadas = horasTrabajadas
+            self.__horas_trabajadas = horas_trabajadas
 
-        if descripcionTareas is not None:
-            if not descripcionTareas:
+        if descripcion_tareas is not None:
+            if not descripcion_tareas:
                 return False
-            self.__descripcionTareas = descripcionTareas
+            self.__descripcion_tareas = descripcion_tareas
 
         return True

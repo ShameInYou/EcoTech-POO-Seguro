@@ -10,31 +10,31 @@ from datetime import date
 class Proyecto:
     def __init__(
         self,
-        idProyecto: str,
+        id_proyecto: str,
         nombre: str,
         descripcion: str,
-        fechaInicio: date
+        fecha_inicio: date
     ):
-        self.__idProyecto = idProyecto
+        self.__id_proyecto = id_proyecto
         self.__nombre = nombre
         self.__descripcion = descripcion
-        self.__fechaInicio = fechaInicio
+        self.__fecha_inicio = fecha_inicio
 
-    def crearProyecto(self) -> bool:
+    def crear_proyecto(self) -> bool:
         """Valida que el proyecto tenga sus datos obligatorios."""
-        if not self.__idProyecto or not self.__nombre:
+        if not self.__id_proyecto or not self.__nombre:
             return False
 
-        if not isinstance(self.__fechaInicio, date):
+        if not isinstance(self.__fecha_inicio, date):
             return False
 
         return True
 
-    def editarProyecto(
+    def editar_proyecto(
         self,
         nombre: str = None,
         descripcion: str = None,
-        fechaInicio: date = None
+        fecha_inicio: date = None
     ) -> bool:
         """Permite modificar los datos principales del proyecto."""
         if nombre is not None:
@@ -45,13 +45,13 @@ class Proyecto:
         if descripcion is not None:
             self.__descripcion = descripcion
 
-        if fechaInicio is not None:
-            if not isinstance(fechaInicio, date):
+        if fecha_inicio is not None:
+            if not isinstance(fecha_inicio, date):
                 return False
-            self.__fechaInicio = fechaInicio
+            self.__fecha_inicio = fecha_inicio
 
         return True
 
-    def eliminarProyecto(self) -> bool:
+    def eliminar_proyecto(self) -> bool:
         """Representa la eliminación lógica del proyecto."""
         return True

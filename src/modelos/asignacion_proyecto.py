@@ -10,16 +10,16 @@ from typing import Any
 class AsignacionProyecto:
     def __init__(
         self,
-        idAsignacion: str,
-        fechaAsignacion: date,
-        rolProyecto: str,
+        id_asignacion: str,
+        fecha_asignacion: date,
+        rol_proyecto: str,
         empleado: Any,
         proyecto: Any,
         activo: bool = True
     ):
-        self.__idAsignacion = idAsignacion
-        self.__fechaAsignacion = fechaAsignacion
-        self.__rolProyecto = rolProyecto
+        self.__id_asignacion = id_asignacion
+        self.__fecha_asignacion = fecha_asignacion
+        self.__rol_proyecto = rol_proyecto
         self.__activo = activo
 
         # Esta clase representa la relación muchos-a-muchos
@@ -27,7 +27,7 @@ class AsignacionProyecto:
         self.__empleado = empleado
         self.__proyecto = proyecto
 
-    def finalizarAsignacion(self) -> bool:
+    def finalizar_asignacion(self) -> bool:
         """Finaliza una asignación activa."""
         if not self.__activo:
             return False
