@@ -7,9 +7,9 @@ class Rol:
     """Clase para representar un rol en el sistema."""  #Les juro que no usé mucha IA
 
     def __init__(self, id_rol:str, nombreRol:str, permisos:list):
-        self.id_rol = id_rol
-        self.nombreRol = nombreRol
-        self.permisos = permisos
+        self.__id_rol = id_rol
+        self.__nombreRol = nombreRol
+        self.__permisos = permisos
 
 
     @property
