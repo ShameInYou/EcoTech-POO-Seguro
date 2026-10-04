@@ -6,12 +6,12 @@
 
 #CLASE USUARIO
 class Usuario:
-    def __init__(self, id_usuario:str, username:str, passwordHash:str, estado:bool, intentosfallidos:int):
-        self.__id_usuario = id_usuario
-        self.__username = username
-        self.__passwordHash = passwordHash
-        self.__estado = estado
-        self.__intentosfallidos = intentosfallidos
+    def __init__(self, id_usuario:str, username:str, password_hash:str, estado:bool, intentosfallidos:int):
+        self._id_usuario = id_usuario
+        self._username = username
+        self.__password_hash = password_hash
+        self._estado = estado
+        self._intentosfallidos = intentosfallidos
 
     @property
     def id_usuario(self):
@@ -30,12 +30,12 @@ class Usuario:
         self._username = value
 
     @property
-    def passwordHash(self):
-        return self._passwordHash
+    def password_hash(self):
+        return self.__password_hash
 
-    @passwordHash.setter
-    def passwordHash(self, value):
-        self._passwordHash = value
+    @password_hash.setter
+    def password_hash(self, value):
+        self.__password_hash = value
         
 
     @property
@@ -66,16 +66,16 @@ class Usuario:
         """
         # Aquí se implementaría la lógica de autenticación, comparando el hash de la contraseña proporcionada con el almacenado.
         # Por simplicidad, se devuelve True si las contraseñas coinciden, False en caso contrario.
-        return self.passwordHash == password
+        return self.password_hash == password
 
-    def cambiarPass(self, nueva_password:str) -> None:
+    def cambiar_pass(self, nueva_password: str) -> None:
         """Método para cambiar la contraseña del usuario.
 
         Args:
             nueva_password (str): Nueva contraseña proporcionada por el usuario.
         """
         # Aquí se implementaría la lógica para cambiar la contraseña, actualizando el hash de la nueva contraseña.
-        self.passwordHash = nueva_password
+        self.password_hash = nueva_password
 
     def bloquearcuenta(self) -> None:
         """Método para bloquear la cuenta del usuario."""

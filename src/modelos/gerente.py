@@ -1,16 +1,16 @@
 """Módulo reservado para Gerente."""
 
-# TODO: definir Gerente según el UML definitivo del equipo.
+#TODO: definir Gerente según el UML definitivo del equipo. #DONE
 # Atributos, métodos y relaciones pendientes de implementación.
 from empleado import Empleado
 from datetime import date as Date
 
 
 class Gerente(Empleado):
-    def __init__(self, id_usuario:str, username:str, passwordHash:str, id_empleado:str, nombre:str, direccion:str, correo:str, fechaContrato:Date, salario: float, estado, intentosfallidos:int, departamentoAsignado:str, presupuestoAsignado: float):
-        super().__init__(id_usuario, username, passwordHash, id_empleado, nombre, direccion, correo, fechaContrato, salario, estado, intentosfallidos)
-        self.__departamentoAsignado = departamentoAsignado
-        self.presupuestoAsignado = presupuestoAsignado
+    def __init__(self, id_usuario:str, username:str, password_hash:str, id_empleado:str, nombre:str, direccion:str, correo:str, fecha_contrato:Date, salario: float, estado, intentosfallidos:int, departamento_asignado:str, presupuesto_asignado: float):
+        super().__init__(id_usuario, username, password_hash, id_empleado, nombre, direccion, correo, fecha_contrato, salario, estado, intentosfallidos)
+        self.__departamentoAsignado = departamento_asignado
+        self.presupuestoAsignado = presupuesto_asignado
 
     @property
     def departamentoAsignado(self):
@@ -33,3 +33,8 @@ class Gerente(Empleado):
 
     def aprobarHoras(self, registro) -> bool:
         return True
+
+    def reasignarProyecto(self, empleado, proyecto) -> None:
+        # La reasignación depende de la estructura de proyectos definida por el equipo.
+        # Se mantiene sin implementación hasta definir cómo se relacionan empleados y proyectos.
+        pass
