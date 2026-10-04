@@ -7,11 +7,11 @@
 #CLASE USUARIO
 class Usuario:
     def __init__(self, id_usuario:str, username:str, passwordHash:str, estado:bool, intentosfallidos:int):
-        self.id_usuario = id_usuario
-        self.username = username
-        self.passwordHash = passwordHash
-        self.estado = estado
-        self.intentosfallidos = intentosfallidos
+        self.__id_usuario = id_usuario
+        self.__username = username
+        self.__passwordHash = passwordHash
+        self.__estado = estado
+        self.__intentosfallidos = intentosfallidos
 
     @property
     def id_usuario(self):
