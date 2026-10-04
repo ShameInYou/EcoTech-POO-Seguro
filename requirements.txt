@@ -1,2 +1,4 @@
-# Agregar dependencias y versiones cuando el equipo acuerde las bibliotecas.
-# La estructura inicial solo utiliza la biblioteca estándar de Python.
+# Dependencias para seguridad y exportación de informes.
+cryptography
+reportlab
+openpyxl
