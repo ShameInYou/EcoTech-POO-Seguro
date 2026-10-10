@@ -1,6 +1,6 @@
 """Módulo reservado para Empleado."""
 
-from usuario import Usuario
+from src.modelos.usuario import Usuario
 from datetime import date as Date
 
 

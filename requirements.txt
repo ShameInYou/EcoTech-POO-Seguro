@@ -2,3 +2,4 @@
 cryptography
 reportlab
 openpyxl
+argon2-cffi

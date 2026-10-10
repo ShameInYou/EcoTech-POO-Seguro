@@ -1,14 +1,18 @@
 """Módulo reservado para Usuario."""
-
+from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
 
 #CLASE USUARIO
 class Usuario:
-    def __init__(self, id_usuario:str, username:str, password_hash:str, estado:bool, intentosfallidos:int):
+    MAX_INTENTOS = 3
+    __hasher = PasswordHasher
+
+    def __init__(self, id_usuario:str, username:str, password_hash:str, estado:bool, intentos_fallidos:int):
         self._id_usuario = id_usuario
         self._username = username
         self.__password_hash = password_hash
         self._estado = estado
-        self._intentosfallidos = intentosfallidos
+        self._intentos_fallidos = intentos_fallidos
 
     @property
     def id_usuario(self):
@@ -29,10 +33,6 @@ class Usuario:
     @property
     def password_hash(self):
         return self.__password_hash
-
-    @password_hash.setter
-    def password_hash(self, value):
-        self.__password_hash = value
         
 
     @property
@@ -44,40 +44,51 @@ class Usuario:
         self._estado = value
 
     @property
-    def intentosfallidos(self):
-        return self._intentosfallidos
+    def intentos_fallidos(self):
+        return self._intentos_fallidos
 
-    @intentosfallidos.setter
-    def intentosfallidos(self, value):
-        self._intentosfallidos = value
+    @intentos_fallidos.setter
+    def intentos_fallidos(self, value):
+        self._intentos_fallidos = value
+
+    @staticmethod
+    def generar_hass(password: str) -> str:
+        if not isinstance(password, str) or not password:
+            raise ValueError("La contraseña no puede ser un texto vacío")
+        
+        return Usuario.__hasher.hash(password)
 
 
     def autenticar(self, password:str) -> bool:
-        """Método para autenticar al usuario.
+        if not self.__estado:
+            return False
 
-        Args:
-            password (str): Contraseña proporcionada por el usuario.
+        if not isinstance(password, str):
+            raise TypeError("La contraseña debe ser texto")
 
-        Returns:
-            bool: True si la autenticación es exitosa, False en caso contrario.
-        """
-        # Aquí se implementaría la lógica de autenticación, comparando el hash de la contraseña proporcionada con el almacenado.
-        # Por simplicidad, se devuelve True si las contraseñas coinciden, False en caso contrario.
-        return self.password_hash == password
+        try:
+            self.__hasher.verify(self.__password_hash, password)
+        except VerifyMismatchError:
+            self.__intentos_fallidos += 1
 
-    def cambiar_pass(self, nueva_password: str) -> None:
-        """Método para cambiar la contraseña del usuario.
+            if self.__intentos_fallidos >= self.MAX_INTENTOS:
+                self.bloquearcuenta()
 
-        Args:
-            nueva_password (str): Nueva contraseña proporcionada por el usuario.
-        """
-        # Aquí se implementaría la lógica para cambiar la contraseña, actualizando el hash de la nueva contraseña.
-        self.password_hash = nueva_password
+            return False
+
+        self.__intentos_fallidos = 0
+        return True
+
+    def cambiar_pass(self, nueva_password: str) -> bool:
+        nuevo_hash = self.__generar_hash(nueva_password)
+        self.__password_hash = nuevo_hash
+        return True
+        
 
     def bloquearcuenta(self) -> None:
         """Método para bloquear la cuenta del usuario."""
         self.estado = False
 
     def desbloquearcuenta(self) -> None:
-        """Método para desbloquear la cuenta del usuario."""
-        self.estado = True
+        self._estado = True
+        self._intentos_fallidos = 0
