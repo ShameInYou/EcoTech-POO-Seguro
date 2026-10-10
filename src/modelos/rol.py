@@ -7,7 +7,10 @@ class Rol:
     def __init__(self, id_rol: str, nombre_rol: str, permisos: list):
         self._id_rol = id_rol
         self._nombre_rol = nombre_rol
-        self._permisos = permisos
+        self._permisos = []
+
+        for permiso in permisos:
+            self.asignar_permiso(permiso)
 
 
     @property
@@ -27,19 +30,19 @@ class Rol:
         self._nombre_rol = value
 
     @property
-    def permisos(self):
-        return self._permisos
-
-    @permisos.setter
-    def permisos(self, value):
-        self._permisos = value
-
-
+    def permisos(self) -> tuple[str, ...]:
+        return tuple(self._permisos)
+    
 
     def asignar_permiso(self, permiso: str) -> None:
         """Método para asignar un permiso al rol."""
-        if permiso not in self.permisos:
-            self.permisos.append(permiso)
+        if not isinstance(permiso, str) or not permiso.strip():
+            raise ValueError("El permiso no puede ser texto vacío")
+
+        permiso = permiso.strip()
+
+        if permiso not in self.__permisos:
+            self.__permiso.append(permiso)
 
 
     def verificar_permiso(self, permiso: str) -> bool:

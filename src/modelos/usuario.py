@@ -2,17 +2,24 @@
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 
+from src.modelos.rol import Rol
+
 #CLASE USUARIO
 class Usuario:
     MAX_INTENTOS = 3
-    __hasher = PasswordHasher
+    __hasher = PasswordHasher()
 
-    def __init__(self, id_usuario:str, username:str, password_hash:str, estado:bool, intentos_fallidos:int):
+    def __init__(self, id_usuario:str, username:str, password_hash:str, estado:bool, intentos_fallidos:int, rol: Rol):
+
+        if not isinstance(rol, Rol):
+            raise TypeError("El usuario debe tener un objeto Rol")
+
         self._id_usuario = id_usuario
         self._username = username
         self.__password_hash = password_hash
         self._estado = estado
         self._intentos_fallidos = intentos_fallidos
+        self.__rol = rol
 
     @property
     def id_usuario(self):
@@ -52,7 +59,7 @@ class Usuario:
         self._intentos_fallidos = value
 
     @staticmethod
-    def generar_hass(password: str) -> str:
+    def generar_hash(password: str) -> str:
         if not isinstance(password, str) or not password:
             raise ValueError("La contraseña no puede ser un texto vacío")
         
@@ -69,26 +76,29 @@ class Usuario:
         try:
             self.__hasher.verify(self.__password_hash, password)
         except VerifyMismatchError:
-            self.__intentos_fallidos += 1
+            self._intentos_fallidos += 1
 
-            if self.__intentos_fallidos >= self.MAX_INTENTOS:
-                self.bloquearcuenta()
+            if self._intentos_fallidos >= self.MAX_INTENTOS:
+                self.bloquear_cuenta()
 
             return False
 
-        self.__intentos_fallidos = 0
+        self._intentos_fallidos = 0
         return True
 
     def cambiar_pass(self, nueva_password: str) -> bool:
-        nuevo_hash = self.__generar_hash(nueva_password)
+        nuevo_hash = self.generar_hash(nueva_password)
         self.__password_hash = nuevo_hash
         return True
         
 
-    def bloquearcuenta(self) -> None:
+    def bloquear_cuenta(self) -> None:
         """Método para bloquear la cuenta del usuario."""
         self.estado = False
 
-    def desbloquearcuenta(self) -> None:
+    def desbloquear_cuenta(self) -> None:
         self._estado = True
         self._intentos_fallidos = 0
+
+    def tiene_permiso(self, permiso: str) -> bool:
+        return self._estado and self.__rol.verificar_permiso(permiso)

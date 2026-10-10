@@ -4,7 +4,7 @@ from datetime import date
 from typing import Any
 
 
-class RegistroTiempo:
+class registro_tiempo:
     def __init__(
         self,
         id_registro: str,

@@ -1,12 +1,13 @@
 """Módulo reservado para Gerente."""
 
 from src.modelos.empleado import Empleado
+from src.modelos.rol import Rol
 from datetime import date as Date
 
 
 class Gerente(Empleado):
-    def __init__(self, id_usuario:str, username:str, password_hash:str, id_empleado:str, nombre:str, direccion:str, correo:str, fecha_contrato:Date, salario: float, estado, intentosfallidos:int, departamento_asignado:str, presupuesto_asignado: float):
-        super().__init__(id_usuario, username, password_hash, id_empleado, nombre, direccion, correo, fecha_contrato, salario, estado, intentosfallidos)
+    def __init__(self, id_usuario:str, username:str, password_hash:str, id_empleado:str, nombre:str, direccion:str, correo:str, fecha_contrato:Date, salario: float, estado, intentosfallidos:int, departamento_asignado:str, presupuesto_asignado: float, rol: Rol):
+        super().__init__(id_usuario, username, password_hash, id_empleado, nombre, direccion, correo, fecha_contrato, salario, estado, intentosfallidos, rol)
         self.__departamentoAsignado = departamento_asignado
         self.presupuestoAsignado = presupuesto_asignado
 
@@ -30,9 +31,10 @@ class Gerente(Empleado):
         self.__presupuestoAsignado = value
 
     def aprobarHoras(self, registro) -> bool:
-        return True
+        if not self.tiene_permiso("aprobar_horas"):
+            raise PermissionError("No tienes permiso para aprobar horas")
+
 
     def reasignarProyecto(self, empleado, proyecto) -> None:
-        # La reasignación depende de la estructura de proyectos definida por el equipo.
-        # Se mantiene sin implementación hasta definir cómo se relacionan empleados y proyectos.
-        pass
+       if not self.tiene_permiso("reasignar_proyecto"):
+           raise PermissionError("No tienes permiso para reasignar proyectos")
