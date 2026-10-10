@@ -13,7 +13,7 @@ class Informe(ABC):
 
     # __init__ prepara cada objeto. Las anotaciones como str o -> None ayudan
     # a leer los tipos esperados; por sí solas no validan los datos al ejecutar.
-    def __init__(self, titulo: str, lineas: list[str], rutaSalida: Path) -> None:
+    def __init__(self, titulo: str, lineas: list[str], ruta_salida: Path) -> None:
         self.__titulo = ValidadorEntradas.sanitizarEntrada(titulo)
         if not self.__titulo:
             raise ValueError("El título no puede estar vacío.")
@@ -24,7 +24,7 @@ class Informe(ABC):
         # La expresión interior limpia cada línea antes de almacenarla.
         self.__lineas = tuple(ValidadorEntradas.sanitizarEntrada(linea) for linea in lineas)
         self.__fechaCreacion = date.today()
-        self.__rutaSalida = Path(rutaSalida)
+        self.__rutaSalida = Path(ruta_salida)
         # None significa que todavía no se generó el documento; después serán bytes.
         self.__contenido: bytes | None = None
 

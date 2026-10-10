@@ -1,7 +1,5 @@
 """Módulo reservado para Departamento."""
 
-# TODO: definir Departamento según el UML definitivo del equipo.
-# Atributos, métodos y relaciones pendientes de implementación.
 
 class Departamento:
     def __init__(self, id_departamento: str, nombre: str):

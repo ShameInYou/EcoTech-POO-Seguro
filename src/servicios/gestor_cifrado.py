@@ -14,14 +14,14 @@ class GestorCifrado:
         self.__algoritmo = "Fernet"
         self.__cifrador = Fernet(clave)
 
-    def cifrarDato(self, dato: str) -> str:
+    def cifrar_dato(self, dato: str) -> str:
         if not isinstance(dato, str):
             raise TypeError("El dato a cifrar debe ser texto.")
         # Fernet trabaja con bytes: UTF-8 convierte el texto de entrada y
         # ASCII convierte el token resultante a texto para poder guardarlo.
         return self.__cifrador.encrypt(dato.encode("utf-8")).decode("ascii")
 
-    def descifrarDato(self, dato: str) -> str:
+    def descifrar_dato(self, dato: str) -> str:
         if not isinstance(dato, str):
             raise TypeError("El dato cifrado debe ser texto.")
         # Invertimos las conversiones para recuperar el texto original.

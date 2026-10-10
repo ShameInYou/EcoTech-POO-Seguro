@@ -12,30 +12,30 @@ class GestorInforme:
     """Crea la hija elegida y delega en sus métodos polimórficos."""
 
     def __init__(self, titulo: str, lineas: list[str], carpetaSalida: Path) -> None:
-        self.__formatoSalida = ""
+        self.__formato_salida = ""
         self.__titulo = titulo
         # Copiamos la lista para que cambios externos no afecten al gestor.
         self.__lineas = list(lineas)
-        self.__carpetaSalida = Path(carpetaSalida)
+        self.__carpeta_salida = Path(carpetaSalida)
 
-    def generarInforme(self, tipo: str) -> Informe:
+    def generar_informe(self, tipo: str) -> Informe:
         if not isinstance(tipo, str):
             raise TypeError("El formato debe ser texto.")
         # Aceptamos también entradas como " PDF " o "Excel".
         formato = tipo.strip().lower()
         # Dos formatos: un if/elif es suficiente y fácil de seguir.
         if formato == "pdf":
-            informe = InformePDF(self.__titulo, self.__lineas, self.__carpetaSalida / "informe.pdf")
+            informe = InformePDF(self.__titulo, self.__lineas, self.__carpeta_salida / "informe.pdf")
         elif formato == "excel":
-            informe = InformeExcel(self.__titulo, self.__lineas, self.__carpetaSalida / "informe.xlsx")
+            informe = InformeExcel(self.__titulo, self.__lineas, self.__carpeta_salida / "informe.xlsx")
         else:
             raise ValueError("Elige PDF o Excel.")
         # Cada hija sabe preparar su formato; el gestor solo coordina la llamada.
         informe.generar()
-        self.__formatoSalida = formato
+        self.__formato_salida = formato
         return informe
 
-    def exportarInforme(self, inf: Informe) -> bool:
+    def exportar_informe(self, inf: Informe) -> bool:
         if not isinstance(inf, Informe):
             raise TypeError("Se esperaba un objeto Informe.")
         try:

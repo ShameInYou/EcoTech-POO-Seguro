@@ -1,7 +1,5 @@
 """Módulo reservado para Rol."""
 
-# TODO: definir Rol según el UML definitivo del equipo.
-# Atributos, métodos y relaciones pendientes de implementación.
 
 class Rol:
     """Clase para representar un rol en el sistema."""  #Les juro que no usé mucha IA
