@@ -46,17 +46,11 @@ class Usuario:
     def estado(self):
         return self.__estado
 
-    @estado.setter
-    def estado(self, value):
-        self.__estado = value
 
     @property
     def intentos_fallidos(self):
         return self.__intentos_fallidos
 
-    @intentos_fallidos.setter
-    def intentos_fallidos(self, value):
-        self.__intentos_fallidos = value
 
     @staticmethod
     def generar_hash(password: str) -> str:
@@ -94,7 +88,7 @@ class Usuario:
 
     def bloquear_cuenta(self) -> None:
         """Método para bloquear la cuenta del usuario."""
-        self.estado = False
+        self.__estado = False
 
     def desbloquear_cuenta(self) -> None:
         self.__estado = True

@@ -42,7 +42,7 @@ class Rol:
         permiso = permiso.strip()
 
         if permiso not in self.__permisos:
-            self.__permiso.append(permiso)
+            self.__permisos.append(permiso)
 
 
     def verificar_permiso(self, permiso: str) -> bool:
