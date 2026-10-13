@@ -46,7 +46,7 @@ class registro_tiempo:
         return self.__empleado
 
     @property
-    def protecto(self):
+    def proyecto(self):
         return self.__proyecto
 
     @property
@@ -109,7 +109,7 @@ class registro_tiempo:
         if fecha is not None and not isinstance(fecha, date):
                 return False
 
-        if horas_trabajadas is not None and not self.self._horas_validas(horas_trabajadas):
+        if horas_trabajadas is not None and not self._horas_validas(horas_trabajadas):
                 return False
 
         if descripcion_tareas is not None and not self._texto_valido(descripcion_tareas):

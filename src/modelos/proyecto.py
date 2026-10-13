@@ -17,6 +17,19 @@ class Proyecto:
         self.__descripcion = descripcion
         self.__fecha_inicio = fecha_inicio
 
+
+    @property
+    def nombre(self):
+        return self.__nombre
+
+    @property
+    def descripcion(self):
+        return self.__descripcion
+
+    @property
+    def fecha_inicio(self):
+        return self.__fecha_inicio
+
     def crear_proyecto(self) -> bool:
         """Valida que el proyecto tenga sus datos obligatorios."""
         if not self.__id_proyecto or not self.__nombre:
@@ -29,22 +42,32 @@ class Proyecto:
 
     def editar_proyecto(
         self,
-        nombre: str = None,
-        descripcion: str = None,
-        fecha_inicio: date = None
+        nombre: str | None = None,
+        descripcion: str | None = None,
+        fecha_inicio: date | None = None
     ) -> bool:
-        """Permite modificar los datos principales del proyecto."""
+        # Primero se comprueban cambios solicitados
         if nombre is not None:
-            if not nombre:
+            if not isinstance(nombre, str) or not nombre.strip():
                 return False
-            self.__nombre = nombre
 
         if descripcion is not None:
-            self.__descripcion = descripcion
+            if not isinstance(descripcion, str):
+                return False
 
         if fecha_inicio is not None:
             if not isinstance(fecha_inicio, date):
                 return False
+
+
+
+        if nombre is not None:
+            self.__nombre = nombre.strip()
+
+        if descripcion is not None:
+            self.__descripcion = descripcion.strip()
+
+        if fecha_inicio is not None:
             self.__fecha_inicio = fecha_inicio
 
         return True
