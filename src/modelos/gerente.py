@@ -2,23 +2,14 @@
 
 from src.modelos.empleado import Empleado
 from src.modelos.rol import Rol
+from src.modelos.departamento import Departamento
 from datetime import date as Date
 
 
 class Gerente(Empleado):
-    def __init__(self, id_usuario:str, username:str, password_hash:str, id_empleado:str, nombre:str, direccion:str, correo:str, fecha_contrato:Date, salario: float, estado, intentosfallidos:int, departamento_asignado:str, presupuesto_asignado: float, rol: Rol):
-        super().__init__(id_usuario, username, password_hash, id_empleado, nombre, direccion, correo, fecha_contrato, salario, estado, intentosfallidos, rol)
-        self.__departamentoAsignado = departamento_asignado
+    def __init__(self, id_usuario:str, username:str, password_hash:str, id_empleado:str, nombre:str, direccion:str, correo:str, fecha_contrato:Date, salario: float, estado, intentosfallidos:int, departamento: Departamento, presupuesto_asignado: float, rol: Rol):
+        super().__init__(id_usuario, username, password_hash, id_empleado, nombre, direccion, correo, fecha_contrato, salario, estado, intentosfallidos, rol, departamento)
         self.presupuestoAsignado = presupuesto_asignado
-
-    @property
-    def departamentoAsignado(self):
-        return self.__departamentoAsignado
-
-    @departamentoAsignado.setter
-    def departamentoAsignado(self, value):
-        self.__departamentoAsignado = value
-
 
     @property
     def presupuestoAsignado(self):

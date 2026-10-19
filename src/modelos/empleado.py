@@ -3,13 +3,17 @@ from src.modelos.registro_tiempo import registro_tiempo
 from src.modelos.proyecto import Proyecto
 from src.modelos.usuario import Usuario
 from src.modelos.rol import Rol
+from src.modelos.departamento import Departamento
 
 from datetime import date as Date
 from uuid import uuid4
 
 
 class Empleado(Usuario):
-    def __init__(self, id_usuario:str, username:str, password_hash:str, id_empleado:str, nombre:str, direccion:str, correo:str, fecha_contrato:Date, salario: float, estado, intentosfallidos, rol: Rol):
+    def __init__(self, id_usuario:str, username:str, password_hash:str, id_empleado:str, nombre:str, direccion:str, correo:str, fecha_contrato:Date, salario: float, estado, intentosfallidos, rol: Rol, departamento: Departamento):
+        if not isinstance(departamento, Departamento):
+            raise TypeError("El empleado debe tener un Departamento.")
+        self.__departamento = departamento
         super().__init__(id_usuario, username, password_hash, estado, intentosfallidos, rol)
         self.__id_empleado = id_empleado
         self.__nombre = nombre
@@ -17,6 +21,10 @@ class Empleado(Usuario):
         self.__correo = correo
         self.__fecha_contrato = fecha_contrato
         self.__salario = salario
+
+    @property
+    def departamento(self) -> Departamento:
+        return self.__departamento
 
     @property
     def id_empleado(self):

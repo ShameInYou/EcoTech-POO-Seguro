@@ -2,6 +2,7 @@ import unittest
 from datetime import date
 
 from src.modelos.empleado import Empleado
+from src.modelos.departamento import Departamento
 from src.modelos.proyecto import Proyecto
 from src.modelos.registro_tiempo import registro_tiempo
 from src.modelos.rol import Rol
@@ -28,7 +29,8 @@ class TestRegistroTiempo(unittest.TestCase):
             salario=1000,
             estado=True,
             intentosfallidos=0,
-            rol=rol
+            rol=rol,
+            departamento=Departamento("D01", "Desarrollo")
         )
 
         self.proyecto = Proyecto(
