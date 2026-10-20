@@ -1,13 +1,9 @@
+DROP DATABASE IF EXISTS ecotech_db;
+CREATE DATABASE ecotech_db
+	CHARACTER SET utf8mb4 
+    COLLATE utf8mb4_spanish_ci;
+USE ecotech_db;
 
--- Orden de creación: primero las tablas que no dependen de nadie
--- (rol, permiso), después las que apuntan a ellas, y al final las
--- que dependen de varias.
-
-
--- ROLES Y PERMISOS
--- Cada rol tiene un nombre ("Administrador", "Empleado", etc.).
--- Los permisos van en su propia tabla, porque un rol puede tener
--- muchos permisos y un permiso puede estar en muchos roles.
 
 CREATE TABLE rol (
     id_rol      VARCHAR(36) NOT NULL PRIMARY KEY,
@@ -200,7 +196,7 @@ CREATE TABLE registro_tiempo (
 
     CONSTRAINT fk_registro_asignacion
         FOREIGN KEY (id_empleado, id_proyecto)
-        REFERENCES asignacion_proyecto(id_empleado, id_proyecto) ON DELETE RESTRICT,
+        REFERENCES asignacion_proyecto(id_empleado, id_proyecto) ON DELETE RESTRICT
 
 ) ENGINE = InnoDB;
 
