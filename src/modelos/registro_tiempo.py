@@ -18,6 +18,8 @@ class RegistroTiempo:
         proyecto: Any,
         aprobado: bool = False
     ):
+        if proyecto is not None and not proyecto.activo:
+            raise ValueError("No se pueden registrar horas en un proyecto desactivado")
         self.__id_registro = id_registro
         self.__fecha = fecha
         self.__horas_trabajadas = horas_trabajadas
@@ -28,6 +30,18 @@ class RegistroTiempo:
         # qué empleado registró horas y en qué proyecto.
         self.__empleado = empleado
         self.__proyecto = proyecto
+
+    @property
+    def empleado(self):
+        return self.__empleado
+
+    @property
+    def proyecto(self):
+        return self.__proyecto
+
+    @property
+    def horas_trabajadas(self):
+        return self.__horas_trabajadas
 
     def crear_registro(self) -> bool:
         """Valida los datos mínimos necesarios para crear un registro."""
@@ -44,6 +58,9 @@ class RegistroTiempo:
             return False
 
         if self.__empleado is None or self.__proyecto is None:
+            return False
+
+        if not self.__proyecto.activo:
             return False
 
         return True

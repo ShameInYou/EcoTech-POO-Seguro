@@ -2,7 +2,7 @@
 
 # TODO: definir Empleado según el UML definitivo del equipo.
 # Atributos, métodos y relaciones pendientes de implementación.
-from usuario import Usuario
+from .usuario import Usuario
 from datetime import date as Date
 
 
@@ -15,6 +15,15 @@ class Empleado(Usuario):
         self.__correo = correo
         self.__fechaContrato = fecha_contrato
         self.__salario = salario
+        self.__departamento = None
+
+    @property
+    def departamento(self):
+        return self.__departamento
+
+    def _asignar_departamento(self, departamento):
+        """Uso interno de Departamento para sincronizar la pertenencia actual."""
+        self.__departamento = departamento
 
     @property
     def id_empleado(self):

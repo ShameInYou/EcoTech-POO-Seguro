@@ -19,6 +19,11 @@ class Proyecto:
         self.__nombre = nombre
         self.__descripcion = descripcion
         self.__fecha_inicio = fecha_inicio
+        self.__activo = True
+
+    @property
+    def activo(self) -> bool:
+        return self.__activo
 
     def crear_proyecto(self) -> bool:
         """Valida que el proyecto tenga sus datos obligatorios."""
@@ -53,5 +58,8 @@ class Proyecto:
         return True
 
     def eliminar_proyecto(self) -> bool:
-        """Representa la eliminación lógica del proyecto."""
+        """Desactiva sin borrar los datos ni las relaciones del proyecto."""
+        if not self.__activo:
+            return False
+        self.__activo = False
         return True
