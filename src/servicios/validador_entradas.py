@@ -10,7 +10,7 @@ class ValidadorEntradas:
     # @staticmethod no necesita self ni datos de una instancia. Podemos llamar
     # ValidadorEntradas.validarEmail(...) sin crear un objeto primero.
     @staticmethod
-    def validarEmail(email: str) -> bool:
+    def validar_email(email: str) -> bool:
         # Validamos sin corregir silenciosamente lo que escribió la persona.
         if not isinstance(email, str) or len(email) > 254:
             return False
@@ -29,12 +29,12 @@ class ValidadorEntradas:
         )
 
     @staticmethod
-    def validarTelefono(tel: str) -> bool:
+    def validar_telefono(tel: str) -> bool:
         # Formato internacional: signo + seguido de entre 8 y 15 dígitos.
         return isinstance(tel, str) and bool(re.fullmatch(r"\+[1-9][0-9]{7,14}", tel))
 
     @staticmethod
-    def sanitizarEntrada(txt: str) -> str:
+    def sanitizar_entrada(txt: str) -> str:
         if not isinstance(txt, str):
             raise TypeError("La entrada debe ser texto.")
         # Limpiar espacios no sustituye consultas SQL parametrizadas.

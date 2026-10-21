@@ -1,8 +1,5 @@
 """Módulo reservado para AsignacionProyecto."""
 
-# TODO: definir AsignacionProyecto según el UML definitivo del equipo.
-# Atributos, métodos y relaciones pendientes de implementación.
-
 from datetime import date
 from typing import Any
 
@@ -17,6 +14,15 @@ class AsignacionProyecto:
         proyecto: Any,
         activo: bool = True
     ):
+        # Imports locales para evitar ciclos al cargar los modelos.
+        from src.modelos.empleado import Empleado
+        from src.modelos.proyecto import Proyecto
+
+        if not isinstance(empleado, Empleado):
+            raise TypeError("Debes indicar un Empleado.")
+        if not isinstance(proyecto, Proyecto):
+            raise TypeError("Debes indicar un Proyecto.")
+
         if not proyecto.activo:
             raise ValueError("No se puede asignar un proyecto desactivado")
         self.__id_asignacion = id_asignacion
@@ -40,6 +46,10 @@ class AsignacionProyecto:
     @property
     def activo(self) -> bool:
         return self.__activo
+
+    @property
+    def rol_proyecto(self) -> str:
+        return self.__rol_proyecto
 
     def finalizar_asignacion(self) -> bool:
         """Finaliza una asignación activa."""

@@ -1,4 +1,6 @@
-# Dependencias para seguridad y exportación de informes.
+# Dependencias para seguridad, informes y conexión a MySQL.
 cryptography
 reportlab
 openpyxl
+argon2-cffi
+PyMySQL

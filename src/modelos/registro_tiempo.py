@@ -1,13 +1,12 @@
 """Módulo reservado para RegistroTiempo."""
-
-# TODO: definir RegistroTiempo según el UML definitivo del equipo.
-# Atributos, métodos y relaciones pendientes de implementación.
+from math import isfinite
+from src.modelos.proyecto import Proyecto
 
 from datetime import date
 from typing import Any
 
 
-class RegistroTiempo:
+class registro_tiempo:
     def __init__(
         self,
         id_registro: str,
@@ -18,7 +17,7 @@ class RegistroTiempo:
         proyecto: Any,
         aprobado: bool = False
     ):
-        if proyecto is not None and not proyecto.activo:
+        if isinstance(proyecto, Proyecto) and not proyecto.activo:
             raise ValueError("No se pueden registrar horas en un proyecto desactivado")
         self.__id_registro = id_registro
         self.__fecha = fecha
@@ -31,6 +30,19 @@ class RegistroTiempo:
         self.__empleado = empleado
         self.__proyecto = proyecto
 
+
+    @property
+    def fecha(self):
+        return self.__fecha
+
+    @property
+    def horas_trabajadas(self):
+        return self.__horas_trabajadas
+
+    @property
+    def descripcion_tareas(self):
+        return self.__descripcion_tareas
+
     @property
     def empleado(self):
         return self.__empleado
@@ -40,24 +52,48 @@ class RegistroTiempo:
         return self.__proyecto
 
     @property
-    def horas_trabajadas(self):
-        return self.__horas_trabajadas
+    def aprobado(self):
+        return self.__aprobado
+
+
+
+    @staticmethod
+    def _horas_validas(horas) -> bool:
+        return(
+            not isinstance(horas, bool)
+            and isinstance(horas, (int, float))
+            and isfinite(horas)
+            and horas > 0
+        )
+
+    @staticmethod
+    def _texto_valido(texto) -> bool:
+        return isinstance(texto, str) and bool (texto.strip())
+
 
     def crear_registro(self) -> bool:
         """Valida los datos mínimos necesarios para crear un registro."""
-        if not self.__id_registro:
+        if not self._texto_valido(self.__id_registro):
             return False
 
         if not isinstance(self.__fecha, date):
             return False
 
-        if self.__horas_trabajadas <= 0:
+        if not self._horas_validas(self.__horas_trabajadas):
             return False
 
-        if not self.__descripcion_tareas:
+        if not self._texto_valido(self.__descripcion_tareas):
             return False
 
-        if self.__empleado is None or self.__proyecto is None:
+        from src.modelos.empleado import Empleado
+
+        if not isinstance(self.__empleado, Empleado):
+            return False
+
+        if not isinstance(self.__proyecto, Proyecto):
+            return False
+
+        if not isinstance(self.__aprobado, bool):
             return False
 
         if not self.__proyecto.activo:
@@ -67,24 +103,31 @@ class RegistroTiempo:
 
     def modificar_registro(
         self,
-        fecha: date = None,
-        horas_trabajadas: float = None,
-        descripcion_tareas: str = None
+        fecha: date | None = None,
+        horas_trabajadas: float | None = None,
+        descripcion_tareas: str | None = None
     ) -> bool:
-        """Permite modificar los datos del registro de tiempo."""
-        if fecha is not None:
-            if not isinstance(fecha, date):
+        if self.__aprobado:
+             return False
+
+        # Primero se validan los cambios solicitados
+        if fecha is not None and not isinstance(fecha, date):
                 return False
-            self.__fecha = fecha
+
+        if horas_trabajadas is not None and not self._horas_validas(horas_trabajadas):
+                return False
+
+        if descripcion_tareas is not None and not self._texto_valido(descripcion_tareas):
+                return False
+
+        # Después de la validación se aplican cambios
+        if fecha is not None:
+             self.__fecha = fecha
 
         if horas_trabajadas is not None:
-            if horas_trabajadas <= 0:
-                return False
-            self.__horas_trabajadas = horas_trabajadas
+             self.__horas_trabajadas = horas_trabajadas
 
         if descripcion_tareas is not None:
-            if not descripcion_tareas:
-                return False
-            self.__descripcion_tareas = descripcion_tareas
+            self.__descripcion_tareas = descripcion_tareas.strip()
 
         return True

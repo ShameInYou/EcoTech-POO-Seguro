@@ -1,12 +1,11 @@
 """Módulo reservado para Departamento."""
 
-# TODO: definir Departamento según el UML definitivo del equipo.
-# Atributos, métodos y relaciones pendientes de implementación.
 
 class Departamento:
     def __init__(self, id_departamento: str, nombre: str):
         self.__id_departamento = id_departamento
         self.__nombre = nombre
+        self.__gerente = None
         self.__activo = True
         self.__empleados = []
         self.__historial_empleados = []
@@ -45,6 +44,20 @@ class Departamento:
         empleado._asignar_departamento(None)
         destino.incorporar_empleado(empleado)
         return True
+
+    @property
+    def gerente(self):
+        return self.__gerente
+
+    def asignar_gerente(self, gerente) -> None:
+        # Import local: Gerente hereda de Empleado, que utiliza Departamento.
+        from src.modelos.gerente import Gerente
+
+        if not isinstance(gerente, Gerente):
+            raise TypeError("Debes indicar un Gerente.")
+        if gerente.departamento is not self:
+            raise ValueError("El gerente debe pertenecer a este departamento.")
+        self.__gerente = gerente
 
     def crear_departamento(self) -> bool:
         """Valida que el departamento tenga sus datos obligatorios."""

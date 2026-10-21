@@ -6,8 +6,9 @@ import unittest
 from src.modelos.asignacion_proyecto import AsignacionProyecto
 from src.modelos.departamento import Departamento
 from src.modelos.empleado import Empleado
+from src.modelos.rol import Rol
 from src.modelos.proyecto import Proyecto
-from src.modelos.registro_tiempo import RegistroTiempo
+from src.modelos.registro_tiempo import registro_tiempo as RegistroTiempo
 
 
 class DesactivacionTest(unittest.TestCase):
@@ -17,8 +18,12 @@ class DesactivacionTest(unittest.TestCase):
         self.departamento = Departamento("D1", "Desarrollo")
         self.empleado = Empleado(
             "U1", "usuario", "hash", "E1", "Nombre", "Dirección",
-            "correo@example.com", self.fecha, 1000, True, 0,
+            "correo@example.com", self.fecha, 1000, True, 0, Rol("R1", "Empleado", []), self.departamento,
         )
+
+        self.departamento._Departamento__empleados.clear()
+        self.departamento._Departamento__historial_empleados.clear()
+        self.empleado._asignar_departamento(None)
 
     def asignacion(self):
         return AsignacionProyecto(
@@ -97,7 +102,7 @@ class DesactivacionTest(unittest.TestCase):
 
     def test_desactivacion_conserva_empleados_inactivos_y_datos(self):
         self.departamento.incorporar_empleado(self.empleado)
-        self.empleado.estado = False
+        self.empleado._Usuario__estado = False
         datos_empleado = vars(self.empleado).copy()
         self.assertTrue(self.departamento.eliminar_departamento())
         self.assertEqual(self.departamento.empleados, (self.empleado,))
@@ -126,9 +131,8 @@ class DesactivacionTest(unittest.TestCase):
     def test_empleado_activo_bloquea_aunque_haya_otro_inactivo(self):
         otro = Empleado(
             "U2", "otro", "hash", "E2", "Otro", "Dirección",
-            "otro@example.com", self.fecha, 1000, False, 0,
+            "otro@example.com", self.fecha, 1000, False, 0, Rol("R2", "Empleado", []), self.departamento,
         )
-        self.departamento.incorporar_empleado(otro)
         self.departamento.incorporar_empleado(self.empleado)
         self.assertFalse(self.departamento.eliminar_departamento())
         self.assertTrue(self.departamento.activo)
