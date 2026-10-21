@@ -13,7 +13,6 @@ class Empleado(Usuario):
     def __init__(self, id_usuario:str, username:str, password_hash:str, id_empleado:str, nombre:str, direccion:str, correo:str, fecha_contrato:Date, salario: float, estado, intentosfallidos, rol: Rol, departamento: Departamento):
         if not isinstance(departamento, Departamento):
             raise TypeError("El empleado debe tener un Departamento.")
-        self.__departamento = departamento
         super().__init__(id_usuario, username, password_hash, estado, intentosfallidos, rol)
         self.__id_empleado = id_empleado
         self.__nombre = nombre
@@ -21,6 +20,13 @@ class Empleado(Usuario):
         self.__correo = correo
         self.__fecha_contrato = fecha_contrato
         self.__salario = salario
+        self.__departamento = None
+        if not departamento.incorporar_empleado(self):
+            raise ValueError("No se puede incorporar al empleado al departamento.")
+
+    def _asignar_departamento(self, departamento):
+        """Uso interno de Departamento para sincronizar la pertenencia actual."""
+        self.__departamento = departamento
 
     @property
     def departamento(self) -> Departamento:
@@ -91,7 +97,7 @@ class Empleado(Usuario):
 
         if not registro.crear_registro():
             raise ValueError("Los datos del registro no son válidos")
-        
+
         return registro
 
     def consultar_perfil(self):     #Creo que fecha_contrato y salario no deberian ser visibles...

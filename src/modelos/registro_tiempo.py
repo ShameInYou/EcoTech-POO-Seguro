@@ -17,6 +17,8 @@ class registro_tiempo:
         proyecto: Any,
         aprobado: bool = False
     ):
+        if isinstance(proyecto, Proyecto) and not proyecto.activo:
+            raise ValueError("No se pueden registrar horas en un proyecto desactivado")
         self.__id_registro = id_registro
         self.__fecha = fecha
         self.__horas_trabajadas = horas_trabajadas
@@ -67,7 +69,7 @@ class registro_tiempo:
     @staticmethod
     def _texto_valido(texto) -> bool:
         return isinstance(texto, str) and bool (texto.strip())
-    
+
 
     def crear_registro(self) -> bool:
         """Valida los datos mínimos necesarios para crear un registro."""
@@ -94,6 +96,9 @@ class registro_tiempo:
         if not isinstance(self.__aprobado, bool):
             return False
 
+        if not self.__proyecto.activo:
+            return False
+
         return True
 
     def modificar_registro(
@@ -104,7 +109,7 @@ class registro_tiempo:
     ) -> bool:
         if self.__aprobado:
              return False
-        
+
         # Primero se validan los cambios solicitados
         if fecha is not None and not isinstance(fecha, date):
                 return False

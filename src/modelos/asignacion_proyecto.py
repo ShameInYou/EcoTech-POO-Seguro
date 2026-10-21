@@ -23,6 +23,8 @@ class AsignacionProyecto:
         if not isinstance(proyecto, Proyecto):
             raise TypeError("Debes indicar un Proyecto.")
 
+        if not proyecto.activo:
+            raise ValueError("No se puede asignar un proyecto desactivado")
         self.__id_asignacion = id_asignacion
         self.__fecha_asignacion = fecha_asignacion
         self.__rol_proyecto = rol_proyecto
