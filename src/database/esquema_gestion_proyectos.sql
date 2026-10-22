@@ -200,7 +200,23 @@ CREATE TABLE registro_tiempo (
 
 ) ENGINE = InnoDB;
 
+-- DATOS INICIALES PARA LA DEMOSTACIÓN
 
+INSERT INTO rol (id_rol, nombre_rol)
+VALUES ('ROL-EMP', 'Empleado');
+
+INSERT INTO permiso (id_permiso, nombre, descripcion)
+VALUES
+    ('PER-REG', 'registrar_horas', 'Registrar horas de trabajo'),
+    ('PER-PERFIL', 'consultar_perfil', 'Consultar el perfil propio');
+
+INSERT INTO rol_permiso (id_rol, id_permiso)
+VALUES
+    ('ROL-EMP', 'PER-REG'),
+    ('ROL-EMP', 'PER-PERFIL');
+
+INSERT INTO departamento (id_departamento, nombre)
+VALUES ('DEP-DEV', 'Desarrollo');
 -- ÍNDICES
 -- Para que las búsquedas por clave foránea sean más rápidas.
 
